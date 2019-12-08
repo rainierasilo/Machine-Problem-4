@@ -1,0 +1,31 @@
+% Problem 4: Projectile Motion
+
+h = input('Initial height of projectile above the ground in meters: '); 
+Vo = input('Magnitude of velocity: ');
+Angle = input('Angle in degrees with respect to +x-axis: ');
+Ax = input('X-component of acceleration: ');
+Ay = input('Y-component of acceleration: ');
+
+if Ay == 0
+    error('Ay cannot be zero, there would be no free fall.');
+end 
+
+tFin = ((-Vo * sind(Angle)) + sqrt((Vo * sind(Angle)) .^ 2 - 2 * Ay * h)) ./ Ay;
+
+if tFin <= 0
+    tFin = ((-Vo * sind(Angle)) + sqrt((Vo * sind(Angle)) .^ 2 - 2 * Ay * h)) ./ -Ay;
+end
+
+Vox = Vo * cosd(Angle .* (pi/180));
+Voy = Vo * sind(Angle .* (pi/180));
+
+t = 0:0.0001:tFin;
+X = (Vox .* t) + (0.5 * Ax .* (t).^ 2);
+Y = h + (Voy .* t) + (0.5 * Ay .* (t) .^ 2);
+
+plot(X,Y,'--go', 'linewidth', 0.3)
+
+title('Projectile Motion')
+xlabel('x-axis')
+ylabel('y-axis')
+grid on
